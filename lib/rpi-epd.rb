@@ -54,6 +54,18 @@ module RPiEPD
       delay_ms(200)
     end
 
+    def get_frame_buffer(pixels)
+      buffer = Array.new(0x00, (@device.width * (@device.height / 8)))
+      (0..(@device.height-1)).each do |i|
+        (0..(@device.width-1)).each do |j|
+          if pixels[j,i] != 0
+            buffer[(j + i * @device.width) / 8] |= 0x80 >> (j % 8)
+          end
+        end
+      end
+      buffer
+    end
+
     def display_frame(frame_buffer)
       raise "Frame buffer is the wrong size" if frame_buffer.count != (@device.width * (@device.height / 8))
       data = frame_buffer.map do |i|
