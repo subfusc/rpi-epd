@@ -1,0 +1,27 @@
+GIT
+  remote: https://github.com/subfusc/ruby-spi.git
+  revision: d3cab3f699e55e5c8a5a65c48144c7ffbbb7a289
+  specs:
+    spi (0.1.0)
+
+PATH
+  remote: .
+  specs:
+    rpi-epd (0.1)
+      rpi_gpio
+      spi
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rpi_gpio (0.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rpi-epd!
+  spi!
+
+BUNDLED WITH
+   1.16.1
