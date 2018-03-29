@@ -55,11 +55,15 @@ module RPiEPD
     end
 
     def get_frame_buffer(pixels)
+      if pixels.count != @device.height || pixels.any?{|row| row.count != @device.width}
+        raise("The aspect ratio is not correct for this set of pixels to device")
+      end
+
       buffer = Array.new((@device.width * (@device.height / 8)), 0x00)
-      (0..(@device.height-1)).each do |i|
-        (0..(@device.width-1)).each do |j|
-          if pixels[j,i] != 0
-            buffer[(j + (i * @device.width)) / 8] |= 0x80 >> (j % 8)
+      (0..(@device.height-1)).each do |y|
+        (0..(@device.width-1)).each do |x|
+          if pixels[y][x] != 0
+            buffer[(x + (y * @device.width)) / 8] |= 0x80 >> (x % 8)
           end
         end
       end
